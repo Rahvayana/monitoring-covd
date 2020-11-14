@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'CoronaController@index');
+
+
+
+
+Auth::routes();
+
+
+Route::get('/', 'CoronaController@index')->name('home');
 Route::get('/provincechart', 'CoronaController@provinceChart');
 Route::get('/provinceLowestChart', 'CoronaController@provinceLowestChart');
 //Auth::routes();
@@ -23,5 +31,4 @@ Route::middleware(['cors'])->group(function () {
     Route::get('coronas-list', 'CoronaController@coronaList'); 
 });
 
-
-
+Route::get('/home', 'HomeController@index')->name('home');

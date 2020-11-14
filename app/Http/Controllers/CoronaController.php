@@ -10,6 +10,11 @@ use Datatables;
 
 class CoronaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $suspect_indo = collect(Http::get('https://api.kawalcorona.com/indonesia')->json());
