@@ -78,4 +78,33 @@ class CoronaController extends Controller
             'data'=>$chart_province
         ]);
     }
+
+    public function provinceLowestChart()
+    {
+        $per_province=array();
+        $name_province=array();
+        $y_province=array();
+        $sembuh_province=array();
+        $mati_province=array();
+        $province=collect(Http::get('https://data.covid19.go.id/public/api/prov.json')->json());
+        $n=0;
+        for($i=count($province['list_data'])-5;$i<count($province['list_data']);$i++){
+            $per_province[]=$province['list_data'][$i];
+            $name_province[]=$per_province[$n]['key'];
+            $y_province[]=$per_province[$n]['jumlah_kasus'];
+            $mati_province[]=$per_province[$n]['jumlah_meninggal'];
+            $sembuh_province[]=$per_province[$n]['jumlah_sembuh'];
+
+            $n++;
+        }
+        $chart_province = array(
+            "nama_provinsi" => $name_province,
+            "jumlah_kasus" => $y_province,
+            "jumlah_mati" => $mati_province,
+            "jumlah_sembuh" => $sembuh_province,
+        );
+        return response()->json([
+            'data'=>$chart_province
+        ]);
+    }
 }

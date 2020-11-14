@@ -236,6 +236,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </figure>
           </div>
         </div>   
+        <div class="row">
+          <div class="col-md-12">
+            <figure class="highcharts-figure">
+              <div id="container3"></div>
+            </figure>
+          </div>
+        </div>   
         </div>
         <!-- /.col-md-12 -->
       </div><!-- /.container-fluid -->
@@ -337,7 +344,67 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     type: 'column'
                 },
                 title: {
-                    text: '5 Besar Kasus Per Provinsi'
+                    text: '5 Besar Kasus Per Provinsi Terbesar'
+                },
+                xAxis: {
+                    categories: response.data.nama_provinsi,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        pointWidth: 20
+                    }
+                },
+                series: [
+                  {
+                    name: 'Jumlah Kasus',
+                    data: response.data.jumlah_kasus,
+                },
+                  {
+                    name: 'Jumlah Kematian',
+                    data: response.data.jumlah_mati,
+                },
+                  {
+                    name: 'Jumlah Sembuh',
+                    data: response.data.jumlah_sembuh,
+                },
+                ]
+            });
+        },
+        error: function (data) {
+                console.log(data);
+          }
+      });
+    $.ajax({
+        type: "GET",
+        url: '/provinceLowestChart/',
+        success: function(response){
+          console.log(response)
+            // Create the chart
+            Highcharts.chart('container3', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '5 Besar Kasus Per Provinsi Terkecil'
                 },
                 xAxis: {
                     categories: response.data.nama_provinsi,

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'CoronaController@index');
 Route::get('/provincechart', 'CoronaController@provinceChart');
+Route::get('/provinceLowestChart', 'CoronaController@provinceLowestChart');
 //Auth::routes();
 
 Route::middleware(['cors'])->group(function () {
