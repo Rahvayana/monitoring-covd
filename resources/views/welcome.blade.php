@@ -274,13 +274,84 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div id="container3"></div>
             </figure>
           </div>
-        </div>   
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title" style="width: 100%">
+                      <i class="fas fa-user mr-1"></i>
+                      Tabel Contact Person Covid - 19 
+                      <button class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#exampleModal">+Tambah Kontak</button>
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                      <div>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Provinsi</th>
+                              <th scope="col">URL</th>
+                              <th scope="col">PHONE</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($contacts as $contact)
+                            <tr>
+                              <th scope="row">{{$loop->iteration}}</th>
+                              <td>{{$contact->provinsi}}</td>
+                              <td>{{$contact->url}}</td>
+                              <td>{{$contact->no_telp}}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                  </div><!-- /.card-body -->
+              </div>
+            </div>
+        </div>    
         </div>
         <!-- /.col-md-12 -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kontak</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('store-contact') }}" method="POST">
+        <div class="modal-body">@csrf
+            <div class="form-group">
+              <label for="provinsi">Provinsi</label>
+              <input type="text" class="form-control" name="provinsi" id="provinsi"  placeholder="Provinsi">
+            </div>
+            <div class="form-group">
+              <label for="provinsi">URL</label>
+              <input type="text" class="form-control" name="url" id="url"  placeholder="URL">
+            </div>
+            <div class="form-group">
+              <label for="provinsi">No Telp</label>
+              <input type="text" class="form-control" name="telp" id="telp"  placeholder="No Telp">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->

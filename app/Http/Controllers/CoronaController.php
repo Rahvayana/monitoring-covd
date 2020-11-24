@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Charts\CoronaChart;
 use App\Charts\StatChart;
+use App\Contact;
 use Illuminate\Support\Facades\Http;
 use Datatables;
 
@@ -28,6 +29,8 @@ class CoronaController extends Controller
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });
 
+        $contacts=Contact::all();
+
         $chart = new CoronaChart;
         $chart->labels($labels);
         $chart->dataset('Kasus Positif', 'doughnut', $data)->backgroundColor($colors);
@@ -44,7 +47,7 @@ class CoronaController extends Controller
         $chart_stat->dataset('Jumlah Kumulatif', 'line', $data_stat)->backgroundColor('#EBF5FB'); 
 
         return view('welcome', [
-            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo
+            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo,'contacts'=>$contacts
         ]);
     }
 
@@ -111,5 +114,15 @@ class CoronaController extends Controller
         return response()->json([
             'data'=>$chart_province
         ]);
+    }
+
+    public function storeContact (Request $request)
+    {
+        $contact=new Contact();
+        $contact->provinsi=$request->provinsi;
+        $contact->url=$request->url;
+        $contact->no_telp=$request->telp;
+        $contact->save();
+        return redirect()->route('home');
     }
 }
