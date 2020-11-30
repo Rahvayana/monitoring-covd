@@ -8,6 +8,7 @@ use App\Charts\StatChart;
 use App\Contact;
 use Illuminate\Support\Facades\Http;
 use Datatables;
+use Illuminate\Support\Facades\DB;
 
 class CoronaController extends Controller
 {
@@ -124,5 +125,14 @@ class CoronaController extends Controller
         $contact->no_telp=$request->telp;
         $contact->save();
         return redirect()->route('home');
+    }
+
+    public function delete($id)
+    {
+        DB::table('contacts')->where('id', $id)->delete();
+        return response()->json([
+            'status'=>200,
+            'message'=>'Sukses',
+        ]);
     }
 }

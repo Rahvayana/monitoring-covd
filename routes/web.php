@@ -27,6 +27,7 @@ Route::get('/provincechart', 'CoronaController@provinceChart');
 Route::get('/provinceLowestChart', 'CoronaController@provinceLowestChart');
 
 Route::post('/storeContact', 'CoronaController@storeContact')->name('store-contact');
+Route::post('/deleteContact/{id}', 'CoronaController@delete')->name('delete-contact');
 //Auth::routes();
 
 Route::middleware(['cors'])->group(function () {

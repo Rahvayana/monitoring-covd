@@ -294,6 +294,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <th scope="col">Provinsi</th>
                               <th scope="col">URL</th>
                               <th scope="col">PHONE</th>
+                              <th scope="col">ACTION</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -303,6 +304,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <td>{{$contact->provinsi}}</td>
                               <td>{{$contact->url}}</td>
                               <td>{{$contact->no_telp}}</td>
+                              <td style="display: flex"><a href="#" data-toggle="modal" data-record-id="{{ $contact->id }}" data-target="#confirm-delete"><span class="badge bg-red"><i class="fa fa-trash"></i></span></a></td>
                             </tr>
                             @endforeach
                           </tbody>
@@ -352,6 +354,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <form action="">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Are You Sure to Delete This Data?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-danger btn-ok">Delete</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -375,6 +400,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
 </div>
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -414,6 +440,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 {{-- END HIGHCHART JS --}}
+<script>
+  $('#confirm-delete').on('click', '.btn-ok', function(e) {
+      var $modalDiv = $(e.delegateTarget);
+      var id = $(this).data('recordId');
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $.post('/deleteContact/' + id).then()
+      $modalDiv.addClass('loading');
+      setTimeout(function() {
+          $modalDiv.modal('hide').removeClass('loading');
+          setTimeout(function(){// wait for 5 secs(2)
+              location.reload(); // then reload the page.(3)
+          }, 1000); 
+          
+      })
+  });
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+      var data = $(e.relatedTarget).data();
+      $('.title', this).text(data.recordTitle);
+      $('.btn-ok', this).data('recordId', data.recordId);
+  });
+</script>
 
   <script>
     $(document).ready( function () {
