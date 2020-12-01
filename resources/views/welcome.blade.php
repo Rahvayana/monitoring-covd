@@ -314,6 +314,47 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>
             </div>
         </div>    
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title" style="width: 100%">
+                      <i class="fas fa-virus mr-1"></i>
+                      Tabel Covid Kemarin - 19 
+                      <a href="{{ route('getData') }}"><button class="btn btn-success" style="float: right;"><i class="fa fa-history"></i> Get Data</button></a>
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                      <div>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Tanggal</th>
+                              <th scope="col">Provinsi</th>
+                              <th scope="col">Positif</th>
+                              <th scope="col">Sembuh</th>
+                              <th scope="col">Meninggal</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($forecasts as $forecast)
+                            <tr>
+                              <th scope="row">{{$loop->iteration}}</th>
+                              <td>{{$forecast->tanggal}}</td>
+                              <td>{{$forecast->provinsi}}</td>
+                              <td>{{$forecast->positif}}</td>
+                              <td>{{$forecast->sembuh}}</td>
+                              <td>{{$forecast->meninggal}}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                  </div><!-- /.card-body -->
+              </div>
+            </div>
+        </div>    
         </div>
         <!-- /.col-md-12 -->
       </div><!-- /.container-fluid -->

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Charts\CoronaChart;
 use App\Charts\StatChart;
 use App\Contact;
+use App\Forecast;
 use Illuminate\Support\Facades\Http;
 use Datatables;
 use Illuminate\Support\Facades\DB;
@@ -46,10 +47,30 @@ class CoronaController extends Controller
         $chart_stat = new StatChart;
         $chart_stat->labels($labels_stat);
         $chart_stat->dataset('Jumlah Kumulatif', 'line', $data_stat)->backgroundColor('#EBF5FB'); 
-
+        $forecast=DB::table('forecasts')->whereDate('tanggal',date('Y-m-d',strtotime("-1 days")))->get();
+        // dd($forecast);
         return view('welcome', [
-            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo,'contacts'=>$contacts
+            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo,'contacts'=>$contacts,'forecasts'=>$forecast
         ]);
+    }
+
+    public function getData()
+    {
+        $forecast=DB::table('forecasts')->whereDate('tanggal',date('Y-m-d',strtotime("-1 days")))->get();
+        if($forecast){
+            return redirect()->route('home');
+        }
+        $provinces=collect(Http::get('https://data.covid19.go.id/public/api/prov.json')->json());
+        foreach($provinces['list_data'] as $province){
+            $forecast=new Forecast();
+            $forecast->provinsi=$province['key'];
+            $forecast->tanggal=$provinces['last_date'];
+            $forecast->sembuh=$province['penambahan']['sembuh'];
+            $forecast->positif=$province['penambahan']['positif'];
+            $forecast->meninggal=$province['penambahan']['meninggal'];
+            $forecast->save();
+        }
+        return redirect()->route('home');
     }
 
     public function coronaList()
