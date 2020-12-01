@@ -56,10 +56,11 @@ class CoronaController extends Controller
 
     public function getData()
     {
-        $forecast=DB::table('forecasts')->whereDate('tanggal',date('Y-m-d',strtotime("-1 days")))->get();
-        if($forecast){
-            return redirect()->route('home');
-        }
+        // $forecast=DB::table('forecasts')->whereDate('tanggal',date('Y-m-d',strtotime("-1 days")))->get();
+
+        // if($forecast){
+        //     return redirect()->route('home');
+        // }
         $provinces=collect(Http::get('https://data.covid19.go.id/public/api/prov.json')->json());
         foreach($provinces['list_data'] as $province){
             $forecast=new Forecast();
