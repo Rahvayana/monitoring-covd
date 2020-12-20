@@ -31,7 +31,8 @@ class CoronaController extends Controller
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });
 
-        $contacts=Contact::all();
+        $contacts=Contact::whereNull('kabupaten')->get();
+        $kabupatens=Contact::whereNull('provinsi')->get();
 
         $chart = new CoronaChart;
         $chart->labels($labels);
@@ -50,7 +51,7 @@ class CoronaController extends Controller
         $forecast=DB::table('forecasts')->whereDate('tanggal',date('Y-m-d',strtotime("-1 days")))->get();
         // dd($forecast);
         return view('welcome', [
-            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo,'contacts'=>$contacts,'forecasts'=>$forecast
+            'chart' => $chart, 'chart_stat' => $chart_stat, 'suspect_indo' => $suspect_indo, 'location_indo' => $location_indo,'contacts'=>$contacts,'forecasts'=>$forecast,'kabupatens'=>$kabupatens
         ]);
     }
 
@@ -141,8 +142,10 @@ class CoronaController extends Controller
 
     public function storeContact (Request $request)
     {
+  
         $contact=new Contact();
         $contact->provinsi=$request->provinsi;
+        $contact->kabupaten=$request->kabupaten;
         $contact->url=$request->url;
         $contact->no_telp=$request->telp;
         $contact->save();
@@ -159,6 +162,19 @@ class CoronaController extends Controller
         $contact=new Contact();
         $contact=Contact::find($id);
         $contact->provinsi=$request->provinsi;
+        $contact->kabupaten=$request->kabupaten;
+        $contact->url=$request->url;
+        $contact->no_telp=$request->no_telp;
+        $contact->save();
+        return redirect()->route('home');
+    }
+
+    public function saveKabupaten (Request $request,$id)
+    {
+        $contact=new Contact();
+        $contact=Contact::find($id);
+        $contact->kabupaten=$request->kabupaten;
+        $contact->provinsi='';
         $contact->url=$request->url;
         $contact->no_telp=$request->no_telp;
         $contact->save();

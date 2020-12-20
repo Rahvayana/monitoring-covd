@@ -17,7 +17,12 @@
             <table class="table">
                 <tr>
                     <td>Provinsi:</td>
-                    <td><input type="text" class="form-control" name="provinsi" id="provinsi" value="{{$contact->provinsi}}"></td>
+                    @if ($contact->provinsi)
+                    <td><input type="text" class="form-control" name="provinsi" id="provinsi" value="{{$contact->provinsi??$contact->kabupaten}}"></td>
+                        
+                    @else
+                    <td><input type="text" class="form-control" name="kabupaten" id="kabupaten" value="{{$contact->provinsi??$contact->kabupaten}}"></td>
+                    @endif
                 </tr>
                 <tr>
                     <td>URL:</td>

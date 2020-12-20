@@ -282,7 +282,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <h3 class="card-title" style="width: 100%">
                       <i class="fas fa-user mr-1"></i>
                       Tabel Contact Person Covid - 19 
-                      <button class="btn btn-success" style="float: right; margin-left: 10px" id="button"><i class="fa fa-download"></i> Export</button> &nbsp;
+                      <button class="btn btn-success" style="float: right; margin-left: 10px" id="button2"><i class="fa fa-download"></i> Export</button> &nbsp;
                       <button class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#exampleModal">+Tambah Kontak</button>
                     </h3>
                   </div>
@@ -308,6 +308,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <td style="display: flex">
                                 <a href="{{ route('update-contact', $contact->id) }}" style="margin-right: 10px;"><span class="badge bg-success"><i class="fa fa-book"></i></span></a>
                                 <a href="#" data-toggle="modal" data-record-id="{{ $contact->id }}" data-target="#confirm-delete"><span class="badge bg-red"><i class="fa fa-trash"></i></span></a>
+                              </td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                  </div><!-- /.card-body -->
+              </div>
+            </div>
+        </div>    
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title" style="width: 100%">
+                      <i class="fas fa-user mr-1"></i>
+                      Tabel Contact Kabupaten Covid - 19 
+                      <button class="btn btn-success" style="float: right; margin-left: 10px" id="button"><i class="fa fa-download"></i> Export</button> &nbsp;
+                      <button class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#exampleModal2">+Tambah Kontak</button>
+                    </h3>
+                  </div>
+                  <div class="card-body">
+                      <div>
+                        <table class="table" id="table2excel2">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Kabupaten</th>
+                              <th scope="col">URL</th>
+                              <th scope="col">PHONE</th>
+                              <th scope="col">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($kabupatens as $kabupaten)
+                            <tr>
+                              <th scope="row">{{$loop->iteration}}</th>
+                              <td>{{$kabupaten->kabupaten}}</td>
+                              <td>{{$kabupaten->url}}</td>
+                              <td>{{$kabupaten->no_telp}}</td>
+                              <td style="display: flex">
+                                <a href="{{ route('update-contact', $kabupaten->id) }}" style="margin-right: 10px;"><span class="badge bg-success"><i class="fa fa-book"></i></span></a>
+                                <a href="#" data-toggle="modal" data-record-id="{{ $kabupaten->id }}" data-target="#confirm-delete"><span class="badge bg-red"><i class="fa fa-trash"></i></span></a>
                               </td>
                             </tr>
                             @endforeach
@@ -381,6 +424,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="form-group">
               <label for="provinsi">Provinsi</label>
               <input type="text" class="form-control" name="provinsi" id="provinsi"  placeholder="Provinsi">
+            </div>
+            <div class="form-group">
+              <label for="provinsi">URL</label>
+              <input type="text" class="form-control" name="url" id="url"  placeholder="URL">
+            </div>
+            <div class="form-group">
+              <label for="provinsi">No Telp</label>
+              <input type="text" class="form-control" name="telp" id="telp"  placeholder="No Telp">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kontak</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('store-contact') }}" method="POST">
+        <div class="modal-body">@csrf
+            <div class="form-group">
+              <label for="provinsi">Kabupaten</label>
+              <input type="text" class="form-control" name="kabupaten" id="kabupaten"  placeholder="Kabupaten">
             </div>
             <div class="form-group">
               <label for="provinsi">URL</label>
@@ -491,6 +566,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   // document.getElementById("demo").innerHTML = ;
   $("#button").click(function(){
     $("#table2excel").table2excel({
+      // exclude CSS class
+      exclude: ".noExl",
+      name: "Worksheet Name",
+      filename: d.getTime(), //do not include extension
+      fileext: ".xls" // file extension
+    }); 
+  });
+  $("#button2").click(function(){
+    $("#table2excel2").table2excel({
       // exclude CSS class
       exclude: ".noExl",
       name: "Worksheet Name",
