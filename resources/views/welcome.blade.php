@@ -282,12 +282,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <h3 class="card-title" style="width: 100%">
                       <i class="fas fa-user mr-1"></i>
                       Tabel Contact Person Covid - 19 
+                      <button class="btn btn-success" style="float: right; margin-left: 10px" id="button"><i class="fa fa-download"></i> Export</button> &nbsp;
                       <button class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#exampleModal">+Tambah Kontak</button>
                     </h3>
                   </div>
                   <div class="card-body">
                       <div>
-                        <table class="table">
+                        <table class="table" id="table2excel">
                           <thead>
                             <tr>
                               <th scope="col">#</th>
@@ -448,6 +449,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- jQuery -->
 <script src="/admin-lte/plugins/jquery/jquery.min.js"></script>
+<script src="/js/jquery.table2excel.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -482,6 +484,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 {{-- END HIGHCHART JS --}}
 <script>
+  var d = new Date();
+  // document.getElementById("demo").innerHTML = ;
+  $("#button").click(function(){
+    $("#table2excel").table2excel({
+      // exclude CSS class
+      exclude: ".noExl",
+      name: "Worksheet Name",
+      filename: d.getTime(), //do not include extension
+      fileext: ".xls" // file extension
+    }); 
+  });
+
+
   $('#confirm-delete').on('click', '.btn-ok', function(e) {
       var $modalDiv = $(e.delegateTarget);
       var id = $(this).data('recordId');
