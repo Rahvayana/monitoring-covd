@@ -778,46 +778,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
           console.log(response)
             // Create the chart
             Highcharts.chart('container4', {
-                chart: {
-                    type: 'column'
-                },
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Grafik Moving Average 7 Hari (Sembuh)'
+            },
+            subtitle: {
+                text: 'Source: apicovid19indonesia'
+            },
+            xAxis: {
+                categories: response.data.tanggal
+            },
+            yAxis: {
                 title: {
-                    text: 'Grafik Moving Average 7 Hari (Sembuh)'
-                },
-                xAxis: {
-                    categories: response.data.tanggal,
-                    crosshair: true
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Jumlah'
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    text: 'Jumlah Orang'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
                     },
-                    series: {
-                        pointWidth: 20
-                    }
-                },
-                series: [
-                  {
-                    name: 'Jumlah Kasus',
-                    data: response.data.sembuh,
-                },
-                ]
-            });
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: 'Sembuh',
+                data: response.data.sembuh
+            }]
+        });
         },
         error: function (data) {
                 console.log(data);
@@ -830,46 +820,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
           console.log(response)
             // Create the chart
             Highcharts.chart('container5', {
-                chart: {
-                    type: 'column'
-                },
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Grafik Moving Average 7 Hari (Positif)'
+            },
+            subtitle: {
+                text: 'Source: apicovid19indonesia'
+            },
+            xAxis: {
+                categories: response.data.tanggal
+            },
+            yAxis: {
                 title: {
-                    text: 'Grafik Moving Average 7 Hari (Positif)'
-                },
-                xAxis: {
-                    categories: response.data.tanggal,
-                    crosshair: true
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Jumlah'
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    text: 'Jumlah Orang'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
                     },
-                    series: {
-                        pointWidth: 20
-                    }
-                },
-                series: [
-                  {
-                    name: 'Jumlah Kasus',
-                    data: response.data.positif,
-                },
-                ]
-            });
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: 'Sembuh',
+                data: response.data.positif
+            }]
+        });
         },
         error: function (data) {
                 console.log(data);
@@ -882,46 +862,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
           console.log(response)
             // Create the chart
             Highcharts.chart('container6', {
-                chart: {
-                    type: 'column'
-                },
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Grafik Moving Average 7 Hari (Meninggal)'
+            },
+            subtitle: {
+                text: 'Source: apicovid19indonesia'
+            },
+            xAxis: {
+                categories: response.data.tanggal
+            },
+            yAxis: {
                 title: {
-                    text: 'Grafik Moving Average 7 Hari (Meninggal)'
-                },
-                xAxis: {
-                    categories: response.data.tanggal,
-                    crosshair: true
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Jumlah'
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    text: 'Jumlah Orang'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
                     },
-                    series: {
-                        pointWidth: 20
-                    }
-                },
-                series: [
-                  {
-                    name: 'Jumlah Kasus',
-                    data: response.data.meninggal,
-                },
-                ]
-            });
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: 'Sembuh',
+                data: response.data.sembuh
+            }]
+        });
         },
         error: function (data) {
                 console.log(data);
