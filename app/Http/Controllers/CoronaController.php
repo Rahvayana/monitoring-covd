@@ -25,6 +25,7 @@ class CoronaController extends Controller
         $location_indo = collect(Http::get('https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json')->json());
         $stat_indo = collect(Http::get('https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/Statistik_Perkembangan_COVID19_Indonesia/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json')->json());
         
+        
         $labels = $suspects_prov->flatten(1)->pluck('Provinsi');
         $data   = $suspects_prov->flatten(1)->pluck('Kasus_Posi');
         $colors = $labels->map(function($item) {
@@ -137,6 +138,46 @@ class CoronaController extends Controller
         );
         return response()->json([
             'data'=>$chart_province
+        ]);
+    }
+
+    public function movingAvg()
+    {
+        $harian = collect(Http::get('https://apicovid19indonesia-v2.vercel.app/api/indonesia/harian')->json());
+        
+        $sevenDays=count($harian)-7;
+        $n=0;
+        for ($i=$sevenDays; $i < count($harian); $i++) { 
+            $sembuh[]=$harian[$i]['sembuh'];
+            $meninggal[]=$harian[$i]['meninggal'];
+            $positif[]=$harian[$i]['positif'];
+            $dataSembuh[$n]['sembuh']=$harian[$i]['sembuh'];
+            $dataSembuh[$n]['meninggal']=$harian[$i]['meninggal'];
+            $dataSembuh[$n]['positif']=$harian[$i]['positif'];
+            $dataSembuh[$n]['tanggal']=date('Y-m-d',strtotime($harian[$i]['tanggal']));
+            $n++;
+        }
+        $dataSembuh[7]['sembuh']=floor(array_sum($sembuh)/7);
+        $dataSembuh[7]['meninggal']=floor(array_sum($meninggal)/7);
+        $dataSembuh[7]['positif']=floor(array_sum($positif)/7);
+        $dataSembuh[7]['tanggal']=date('Y-m-d', strtotime("+1 day"));
+ 
+
+        foreach($dataSembuh as $data){
+            $datasembuh[]=$data['sembuh'];
+            $datameninggal[]=$data['meninggal'];
+            $datapositif[]=$data['positif'];
+            $datatanggal[]=$data['tanggal'];
+        }
+ 
+        $data = array(
+            "sembuh" => ($datasembuh),
+            "positif" => ($datapositif),
+            "meninggal" => ($datameninggal),
+            "tanggal" => ($datatanggal),
+        );
+        return response()->json([
+            'data'=>$data
         ]);
     }
 

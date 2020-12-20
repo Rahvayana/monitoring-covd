@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/', 'CoronaController@index')->name('home');
 Route::get('/getData', 'CoronaController@getData')->name('getData');
+Route::get('/movingAvg', 'CoronaController@movingAvg')->name('movingAvg');
 Route::get('/provincechart', 'CoronaController@provinceChart');
 Route::get('/provinceLowestChart', 'CoronaController@provinceLowestChart');
 

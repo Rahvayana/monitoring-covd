@@ -276,6 +276,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div>
         <div class="row">
+          <div class="col-md-12">
+            <figure class="highcharts-figure">
+              <div id="container4"></div>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <figure class="highcharts-figure">
+              <div id="container5"></div>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <figure class="highcharts-figure">
+              <div id="container6"></div>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg-12">
               <div class="card">
                   <div class="card-header">
@@ -742,6 +763,162 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   {
                     name: 'Jumlah Sembuh',
                     data: response.data.jumlah_sembuh,
+                },
+                ]
+            });
+        },
+        error: function (data) {
+                console.log(data);
+          }
+      });
+    $.ajax({
+        type: "GET",
+        url: '/movingAvg/',
+        success: function(response){
+          console.log(response)
+            // Create the chart
+            Highcharts.chart('container4', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Grafik Moving Average 7 Hari (Sembuh)'
+                },
+                xAxis: {
+                    categories: response.data.tanggal,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        pointWidth: 20
+                    }
+                },
+                series: [
+                  {
+                    name: 'Jumlah Kasus',
+                    data: response.data.sembuh,
+                },
+                ]
+            });
+        },
+        error: function (data) {
+                console.log(data);
+          }
+      });
+    $.ajax({
+        type: "GET",
+        url: '/movingAvg/',
+        success: function(response){
+          console.log(response)
+            // Create the chart
+            Highcharts.chart('container5', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Grafik Moving Average 7 Hari (Positif)'
+                },
+                xAxis: {
+                    categories: response.data.tanggal,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        pointWidth: 20
+                    }
+                },
+                series: [
+                  {
+                    name: 'Jumlah Kasus',
+                    data: response.data.positif,
+                },
+                ]
+            });
+        },
+        error: function (data) {
+                console.log(data);
+          }
+      });
+    $.ajax({
+        type: "GET",
+        url: '/movingAvg/',
+        success: function(response){
+          console.log(response)
+            // Create the chart
+            Highcharts.chart('container6', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Grafik Moving Average 7 Hari (Meninggal)'
+                },
+                xAxis: {
+                    categories: response.data.tanggal,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        pointWidth: 20
+                    }
+                },
+                series: [
+                  {
+                    name: 'Jumlah Kasus',
+                    data: response.data.meninggal,
                 },
                 ]
             });
