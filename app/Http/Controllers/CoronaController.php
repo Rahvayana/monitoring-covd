@@ -149,6 +149,22 @@ class CoronaController extends Controller
         return redirect()->route('home');
     }
 
+    public function update($id)
+    {
+        $data['contact']=Contact::find($id);
+        return view('edit-contact',$data);
+    }
+    public function saveContact (Request $request,$id)
+    {
+        $contact=new Contact();
+        $contact=Contact::find($id);
+        $contact->provinsi=$request->provinsi;
+        $contact->url=$request->url;
+        $contact->no_telp=$request->no_telp;
+        $contact->save();
+        return redirect()->route('home');
+    }
+
     public function delete($id)
     {
         DB::table('contacts')->where('id', $id)->delete();

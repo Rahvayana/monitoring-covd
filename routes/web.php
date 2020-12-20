@@ -27,6 +27,8 @@ Route::get('/getData', 'CoronaController@getData')->name('getData');
 Route::get('/provincechart', 'CoronaController@provinceChart');
 Route::get('/provinceLowestChart', 'CoronaController@provinceLowestChart');
 
+Route::get('/update-contact/{id}', 'CoronaController@update')->name('update-contact');
+Route::post('/save-contact/{id}', 'CoronaController@saveContact')->name('save-contact');
 Route::post('/storeContact', 'CoronaController@storeContact')->name('store-contact');
 Route::post('/deleteContact/{id}', 'CoronaController@delete')->name('delete-contact');
 //Auth::routes();

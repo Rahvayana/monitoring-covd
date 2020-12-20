@@ -305,7 +305,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <td>{{$contact->provinsi}}</td>
                               <td>{{$contact->url}}</td>
                               <td>{{$contact->no_telp}}</td>
-                              <td style="display: flex"><a href="#" data-toggle="modal" data-record-id="{{ $contact->id }}" data-target="#confirm-delete"><span class="badge bg-red"><i class="fa fa-trash"></i></span></a></td>
+                              <td style="display: flex">
+                                <a href="{{ route('update-contact', $contact->id) }}" style="margin-right: 10px;"><span class="badge bg-success"><i class="fa fa-book"></i></span></a>
+                                <a href="#" data-toggle="modal" data-record-id="{{ $contact->id }}" data-target="#confirm-delete"><span class="badge bg-red"><i class="fa fa-trash"></i></span></a>
+                              </td>
                             </tr>
                             @endforeach
                           </tbody>
